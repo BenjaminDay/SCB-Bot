@@ -10,11 +10,14 @@ Check for image 2 in image 1
 image 3 = image 1
 Draw rect of image 2 in image 3
 Display image 1, 2, 3 - top left, top right and bottom centre respectively
+Return pos
 """
 
 #Gets the x and y coords of a needle image from a haystack parameter
 def get_image_pos(filepath, needle, haystack)-> tuple:  #Returns (x1, y1, w, h)
-    return pyautogui.locateOnScreen(filepath + needle + ".jpg", region=haystack, grayscale=True, confidence=0.95)  #Returns (x1, y1, w, h) or None
+    box = pyautogui.locateOnScreen(filepath + needle + ".jpg", region=haystack, grayscale=True, confidence=0.95)  #Returns (x1, y1, w, h) or None
+    if box != None:
+        return (box[0], box[1], box[2], box[3])
 
 #Converts coords between (0, 0) reference frame and a window
 def relative(point, reference, mode = "from00")-> tuple: #Returns same lenght tuple inputted as point
@@ -29,11 +32,11 @@ def relative(point, reference, mode = "from00")-> tuple: #Returns same lenght tu
 
 
 #Converts tuples from x2, y2 coords into width and height
-def convert_xy_wh(input_tuple, mode = "xy2wh")-> tuple:  #Returns (x1, y1, w, h) or (x1, y1, x2, y2) depending on mode
+def convert_xy_wh(coord, mode = "xy2wh")-> tuple:  #Returns (x1, y1, w, h) or (x1, y1, x2, y2) depending on mode
     if mode == "xy2wh":
-        return input_tuple[:2] + (input_tuple[2] - input_tuple[0], input_tuple[3] - input_tuple[1])
+        return coord[:2] + (coord[2] - coord[0], coord[3] - coord[1])
     else:
-        return input_tuple[:2] + (input_tuple[2] + input_tuple[0], input_tuple[3] + input_tuple[1])
+        return coord[:2] + (coord[2] + coord[0], coord[3] + coord[1])
 
 def main(fp, image1, image2):
     #Read in images and prep
@@ -80,7 +83,7 @@ def main(fp, image1, image2):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    
+
     """Edit file path and image names below to test."""
 
     #Filepath
