@@ -38,10 +38,10 @@ def convert_xy_wh(coord, mode = "xy2wh")-> tuple:  #Returns (x1, y1, w, h) or (x
     else:
         return coord[:2] + (coord[2] + coord[0], coord[3] + coord[1])
 
-def main(fp, image1, image2):
+def main(fp1, image1, fp2, image2):
     #Read in images and prep
-    img1 = cv2.imread(fp+image1+".jpg", cv2.IMREAD_COLOR)
-    img2 = cv2.imread(fp+image2+".jpg", cv2.IMREAD_COLOR)
+    img1 = cv2.imread(fp1+image1+".jpg", cv2.IMREAD_COLOR)
+    img2 = cv2.imread(fp2+image2+".jpg", cv2.IMREAD_COLOR)
     cv2.imshow(image1, img1)
     cv2.setWindowProperty(image1,cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
     cv2.setWindowProperty(image1,cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_NORMAL)
@@ -66,13 +66,13 @@ def main(fp, image1, image2):
     cv2.rectangle(screenshot, pt1=rel_image1_xy[:2], pt2=rel_image1_xy[2:], color=(0, 0, 255), thickness=2)  #Drawing outline of image 1
 
     #Find image 2 in image 1
-    pos = get_image_pos(fp, image2, image1_wh)  #x1, y1, w, h
+    pos = get_image_pos(fp2, image2, image1_wh)  #x1, y1, w, h
     if pos != None:
         #Draw image 2 outline onto image 3 (cropped screenshot)
         conv_pos = convert_xy_wh(pos, "wh2xy")
         rel_pos = relative(conv_pos, sc_window[:2])
         print(f"pos: {pos}\nconverted: {conv_pos}\nrelative: {rel_pos}")
-        cv2.rectangle(screenshot, pt1=rel_pos[:2], pt2=rel_pos[2:], color=(0, 255, 0), thickness=2)
+        cv2.rectangle(screenshot, pt1=rel_pos[:2], pt2=rel_pos[2:], color=(255, 0, 0), thickness=2)
 
     time.sleep(0.5)
     #Show image 3
@@ -87,9 +87,10 @@ if __name__ == '__main__':
     """Edit file path and image names below to test."""
 
     #Filepath
-    fp = "images/misc/"
+    fp1 = "images/raw/"
     #Image file names (images must be .jpg)
-    image1 = "sample image"
+    image1 = "startup sample image"
+    fp2 = "images/buttons/"
     image2 = "house"
 
-    main(fp, image1, image2)
+    main(fp1, image1, fp2, image2)

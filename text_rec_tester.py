@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     """Edit file path, image name and preset coords below to test."""
 
-    example = 6
+    example = 2
 
     if example == 1:
         #Filepath
@@ -96,12 +96,6 @@ if __name__ == '__main__':
         #Image file name (images must be .jpg)
         image = "global 2"
         preset = {"placeholder": (210, 360, 150, 28)}
-    elif example == 6:
-        #Filepath
-        fp = "images/todo/"
-        #Image file name (images must be .jpg)
-        image = "daily 2"
-        preset = {"placeholder": (10, 240, 150, 60)}
 
 
     main(fp, image, preset)
