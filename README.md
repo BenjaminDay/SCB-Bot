@@ -3,3 +3,4 @@ This project is primarily to create a bot that can interact with an android emul
 While it is designed to work for Sim City Buildit in mind, 
 the code is written in a way that can be adapted to work for other games with some minimal changes to main.py and also, 
 by replacing the images the bot uses as reference for buttons etc.
+Not functional anymore
